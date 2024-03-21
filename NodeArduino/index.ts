@@ -5,7 +5,7 @@ import { SerialPort } from 'serialport';
 import { ReadlineParser } from '@serialport/parser-readline';
 // https://serialport.io/docs/api-parser-readline
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
-import { ILed } from './interfaces/led.interface';
+import { IRfid } from './interfaces/rfid.interface';
 import { firebase } from './firebase/config';
 
 dotenv.config();
@@ -33,7 +33,7 @@ arduinoSerialPort.on('open', () => {
 parser.on('data', async (data) => {
   console.log(data);
   try {
-    const dataLuz: ILed = {
+    const dataLuz: IRfid = {
       estado: data,
       hora: new Date()
     };

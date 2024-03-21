@@ -1,4 +1,4 @@
-export interface ILed {
+export interface IRfid {
     estado: boolean;
     hora: Date;
   }

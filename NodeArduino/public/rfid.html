@@ -18,8 +18,8 @@
         <hr>
         <div class="row">
             <div class="col">
-                <i id="apagado" class="fa-regular fa-lightbulb" style="font-size: xx-large;"></i>
-                <i id="encendido" class="fa-solid fa-lightbulb" style="font-size: xx-large;color: red;"></i>
+                <i id="cerrado" class="fa-regular fa-lightbulb" style="font-size: xx-large;color: red;"></i>
+                <i id="abieto" class="fa-solid fa-lightbulb" style="font-size: xx-large;color: greenyellow;"></i>
             </div>
             <div class="col">
                 <p id="hora" class="lead"></p>
@@ -50,8 +50,8 @@
             //   }
             //   delay(1000);
             // }
-        const encendido = document.querySelector('#encendido');
-        const apagado = document.querySelector('#apagado');
+        const abieto = document.querySelector('#abieto');
+        const cerrado = document.querySelector('#cerrado');
         const hora = document.querySelector('#hora');
 
         // Import the functions you need from the SDKs you need
@@ -77,22 +77,23 @@
         const q = query(collection(db, 'luces'), orderBy('hora', 'desc'));
 
         onSnapshot(q, (data) => {
-            const estadoLuz = data.docs[0]
-            updateEstadoLuz(estadoLuz);
+            const estadoRfid = data.docs[0]
+            updateEstadoRfid(estadoRfid);
         });
 
-        const updateEstadoLuz = (estadoLuz) => {
-            const estado = estadoLuz.data().estado;
-            const timeStamp = new Timestamp(estadoLuz.data().hora.seconds,
-                estadoLuz.data().hora.nanoseconds);
+        const updateEstadoRfid = (estadoRfid) => {
+            const estado = estadoRfid.data().estado;
+            const timeStamp = new Timestamp(estadoRfid.data().hora.seconds,
+            estadoRfid.data().hora.nanoseconds);
             const fecha = `${timeStamp.toDate().toLocaleDateString()}-${timeStamp.toDate().toLocaleTimeString()}`;
-            console.log(estado, fecha);
-            if (estado == 0) {
-                encendido.style.visibility = "hidden";
-                apagado.style.visibility = "visible";
+            console.log(estado, fecha);                              
+                
+            if (estado ==0) {
+                abierto.style.visibility = "hidden";
+                cerrado.style.visibility = "visible";
             } else {
-                encendido.style.visibility = "visible";
-                apagado.style.visibility = "hidden";
+                abierto.style.visibility = "visible";
+                cerrado.style.visibility = "hidden";
             }
             hora.textContent = fecha;
         }
